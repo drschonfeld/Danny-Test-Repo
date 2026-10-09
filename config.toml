@@ -1,0 +1,76 @@
+# Rev Ops leadership job tracker: edit this file to tune what gets found and how it's scored.
+
+[search]
+# A title must match one of these seniority patterns (regex, case-insensitive)...
+seniority = [
+  '\bhead of\b',
+  '\b(s|e)?vp\b',
+  '\bvice[- ]president\b',
+  '\bchief\b.*\b(revenue|operating|business) officer\b',
+]
+# ...AND one of these function patterns. "primary" scores higher than "adjacent".
+function_primary = [
+  '\brev(enue)?[ -]?ops\b',
+  '\brevenue operations\b',
+  '\b(gtm|go[- ]to[- ]market) (operations|ops|strategy)\b',
+  '\brevenue strategy\b',
+]
+function_adjacent = [
+  '\bsales (operations|ops|strategy)\b',
+  '\bsales (&|and) marketing operations\b',
+  '\bcommercial (operations|excellence)\b',
+  '\bbusiness operations\b',
+  '\bcustomer (success )?operations\b',
+]
+# Titles matching any of these are dropped (e.g. healthcare billing "revenue cycle").
+exclude_titles = [
+  'revenue cycle',
+  '\bintern\b',
+  'assistant to',
+  'executive assistant',
+]
+# Free-text queries for aggregator sources (Remotive, SerpAPI Google Jobs, Adzuna).
+queries = [
+  "VP Revenue Operations",
+  "Head of Revenue Operations",
+  "SVP Revenue Operations",
+  "Vice President GTM Operations",
+]
+# Ignore postings older than this many days (when the source reports a date).
+max_age_days = 30
+
+[fit]
+# Locations you'd consider. "remote" matches remote / anywhere / distributed postings.
+locations = ["remote", "new york", "nyc"]
+# Description keywords that signal a good fit, each worth a few points.
+boost_keywords = [
+  "salesforce", "hubspot", "b2b", "saas", "series b", "series c", "series d",
+  "forecast", "territory", "compensation", "cpq", "deal desk", "clari", "gong",
+  "board", "reports to the cro", "reports to the ceo", "build the team",
+]
+# Description keywords that signal a poor fit.
+penalty_keywords = ["clearance required", "on-site 5 days", "relocation required"]
+# Companies to never show (lowercase).
+exclude_companies = []
+# Only include roles scoring at least this much (0-100) in the report.
+min_score = 40
+
+# Company career boards to scan directly. These are public, ToS-friendly JSON APIs.
+# The slug is the part of the board URL after the host, e.g. job-boards.greenhouse.io/<slug>,
+# jobs.lever.co/<slug>, jobs.ashbyhq.com/<slug>. Unknown slugs are skipped and listed in the report.
+[companies]
+greenhouse = [
+  "airtable", "amplitude", "asana", "brex", "cloudflare", "databricks", "datadog",
+  "dropbox", "elastic", "figma", "gitlab", "gusto", "mongodb", "samsara", "stripe", "twilio",
+]
+lever = ["plaid", "outreach", "highspot"]
+ashby = ["ramp", "notion", "linear", "vanta", "deel", "clay"]
+
+[sources]
+remotive = true      # remote-only job board, no key needed
+remoteok = true      # remote-only job board, no key needed
+# These cover the broader web (LinkedIn, Indeed, company sites) and need free API keys
+# provided as environment variables / GitHub secrets. They're skipped when the key is absent.
+serpapi = true       # SERPAPI_KEY  (Google Jobs results)
+adzuna = true        # ADZUNA_APP_ID + ADZUNA_APP_KEY
+adzuna_country = "us"

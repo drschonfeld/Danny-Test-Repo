@@ -1,6 +1,6 @@
-# Rev Ops leadership roles: 2026-11-02
+# Rev Ops leadership roles: 2026-11-03
 
-Scanned 5219 postings. **0 new** matches, 0 open matches in total.
+Scanned 5216 postings. **0 new** matches, 0 open matches in total.
 
 ## New today
 
